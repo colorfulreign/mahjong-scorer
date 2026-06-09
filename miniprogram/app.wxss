@@ -1,0 +1,78 @@
+/* ===== 国标麻将计分板 全局样式 ===== */
+
+/* 配色方案：中国风 暗红底 + 金色文字 + 暖白卡片 */
+
+page {
+  background-color: #1a1a2e;
+  color: #e8d5b7;
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', sans-serif;
+  min-height: 100vh;
+}
+
+/* 麻将风字符 */
+.mahjong-symbol {
+  font-size: 48rpx;
+}
+
+.wind-east  { color: #ff6b6b; }  /* 东风 - 红 */
+.wind-south { color: #ffd93d; }  /* 南风 - 金 */
+.wind-west  { color: #a8a8a8; }  /* 西风 - 银 */
+.wind-north { color: #6bcb77; }  /* 北风 - 绿 */
+
+/* 通用卡片 */
+.card {
+  background: #252547;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin: 16rpx 0;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.3);
+}
+
+/* 按钮 */
+.btn-primary {
+  background: linear-gradient(135deg, #8B0000, #c41e3a);
+  color: #ffd700;
+  border: none;
+  border-radius: 12rpx;
+  padding: 24rpx 48rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  text-align: center;
+}
+
+.btn-secondary {
+  background: #3a3a5c;
+  color: #ccc;
+  border: 1px solid #555;
+  border-radius: 12rpx;
+  padding: 24rpx 48rpx;
+  font-size: 32rpx;
+  text-align: center;
+}
+
+/* 输入框 */
+.score-input {
+  background: #1a1a2e;
+  color: #ffd700;
+  border: 2rpx solid #8B0000;
+  border-radius: 8rpx;
+  padding: 16rpx 24rpx;
+  font-size: 36rpx;
+  text-align: center;
+  width: 160rpx;
+}
+
+/* 得分颜色 */
+.score-positive { color: #ff6b6b; }  /* 赢分 - 红色 */
+.score-negative { color: #6bcb77; }  /* 输分 - 绿色 */
+.score-zero     { color: #888; }
+
+/* 庄家标识 */
+.dealer-badge {
+  background: #8B0000;
+  color: #ffd700;
+  font-size: 22rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 8rpx;
+  margin-left: 8rpx;
+}

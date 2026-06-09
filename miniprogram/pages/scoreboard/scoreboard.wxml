@@ -1,0 +1,112 @@
+<!-- 国标麻将计分板 -->
+<view class="container">
+
+  <!-- ===== 顶部：场风 + 局数 ===== -->
+  <view class="header">
+    <view class="field-wind">
+      <text class="wind-icon">{{windEmoji.field}}</text>
+      <text class="wind-label">{{fieldWind}}风圈</text>
+    </view>
+    <view class="round-info">
+      <text class="round-num">第 {{roundNum}} 局</text>
+    </view>
+  </view>
+
+  <!-- ===== 四人计分卡片 ===== -->
+  <view class="player-cards">
+    <view class="player-card {{item.isDealer ? 'is-dealer' : ''}} {{item.isWinner ? 'is-winner' : ''}}" 
+          wx:for="{{displayPlayers}}" wx:key="index">
+      
+      <view class="player-wind">
+        <text class="wind-emoji wind-{{item.wind}}">{{item.windEmoji}}</text>
+        <text wx:if="{{item.isDealer}}" class="dealer-badge">庄</text>
+      </view>
+
+      <view class="player-info">
+        <text class="player-name">{{item.name}}</text>
+        <text class="player-wind-label">{{item.wind}}家</text>
+      </view>
+
+      <view class="player-total">
+        <text class="total-label">总分</text>
+        <text class="total-score {{item.totalScore > 0 ? 'positive' : item.totalScore < 0 ? 'negative' : ''}}">
+          {{item.totalScore >= 0 ? '+' : ''}}{{item.totalScore}}
+        </text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ===== 当前局得分输入 ===== -->
+  <view class="score-input-section card">
+    <view class="section-title">第 {{roundNum}} 局 得分输入</view>
+    
+    <view class="input-row" wx:for="{{scoreInputs}}" wx:key="idx">
+      <view class="input-player">
+        <text class="input-wind-emoji">{{item.windEmoji}}</text>
+        <text class="input-name">{{item.name}}</text>
+      </view>
+      <view class="input-field-wrap">
+        <input 
+          class="score-input" 
+          type="number"
+          placeholder="0"
+          value="{{item.value}}"
+          data-idx="{{item.idx}}"
+          bindinput="onScoreInput"
+          bindfocus="onScoreFocus"
+          bindblur="onScoreBlur"
+        />
+      </view>
+      <text class="input-equals" wx:if="{{item.autoValue !== null}}">={{item.autoValue}}</text>
+    </view>
+
+    <!-- 校验提示 -->
+    <view class="validation-msg" wx:if="{{validationMsg}}">
+      <text class="{{validationOk ? 'ok' : 'error'}}">{{validationMsg}}</text>
+    </view>
+
+    <!-- 快速填分：自摸/点炮 快捷模板 -->
+    <view class="quick-fill">
+      <text class="hint-text">快速模板：</text>
+      <view class="quick-btns">
+        <button class="quick-btn" size="mini" data-type="selfDraw" bindtap="quickFill">自摸 +24/-8</button>
+        <button class="quick-btn" size="mini" data-type="ronDealer" bindtap="quickFill">庄点炮 -24/+8</button>
+        <button class="quick-btn" size="mini" data-type="ronOther" bindtap="quickFill">闲点炮 -12/+4</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- ===== 操作按钮 ===== -->
+  <view class="actions">
+    <button class="btn-primary" bindtap="nextRound" disabled="{{!canNextRound}}">
+      下一局 ▶
+    </button>
+    <button class="btn-secondary" bindtap="manualAdvanceWind">
+      手动推进场风
+    </button>
+    <button class="btn-danger" bindtap="endGame">
+      结束对局
+    </button>
+  </view>
+
+  <!-- ===== 历史得分 ===== -->
+  <view class="history-section card">
+    <view class="section-title">📋 本场记录</view>
+    <view wx:if="{{rounds.length === 0}}" class="empty-hint">暂无记录，输入得分后开始</view>
+    
+    <view class="round-record" wx:for="{{rounds}}" wx:key="roundNum">
+      <view class="record-header">
+        <text class="record-round">第{{item.roundNum}}局</text>
+        <text class="record-wind">🀀 {{item.fieldWind}}风圈</text>
+        <text class="record-winner">🏆 {{item.winnerName}}</text>
+      </view>
+      <view class="record-scores">
+        <text wx:for="{{item.displayScores}}" wx:key="idx" wx:for-item="s" 
+              class="record-score {{s.score > 0 ? 'positive' : s.score < 0 ? 'negative' : 'zero'}}">
+          {{s.name}} {{s.score >= 0 ? '+' : ''}}{{s.score}}
+        </text>
+      </view>
+    </view>
+  </view>
+
+</view>
